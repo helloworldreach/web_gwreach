@@ -1,0 +1,9 @@
+export const ROOM_CREATING = 'containers/Room/ROOM_CREATING';
+export const ROOM_CREATED = 'containers/Room/ROOM_CREATED';
+export const ROOM_CREATING_FAILURE = 'containers/Room/ROOM_CREATING_FAILURE';
+export const ROOM_ENTERING = 'containers/Room/ROOM_ENTERING';
+export const ROOM_ENTERED = 'containers/Room/ROOM_ENTERED';
+export const ROOM_ENTERING_FAILURE = 'containers/Room/ROOM_CHANGING_MEDIASERVER';
+export const ROOM_CHANGING_MEDIASERVER = 'containers/Room/ROOM_REQUEST_MEDIASERVER';
+export const ROOM_STARTING_MEDIASERVER = 'containers/Room/ROOM_STARTING_MEDIASERVER';
+export const ROOM_STOPING_MEDIASERVER = 'containers/Room/ROOM_STOPING_MEDIASERVER';

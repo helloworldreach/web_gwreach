@@ -45,13 +45,14 @@ export function entering(name) {
 }
 
 /**
- * Listen to new published streams in the room
+ * Listen to event for the room
  * @param roomUid
  * @param dispatch
  * @returns {function(*)}
  */
-export function streamListener(roomUid, dispatch) {
-    console.log(`Room/actions - streamListener on ${roomUid}`);
+export function roomListener(roomUid, dispatch) {
+    // Listen for mediaserver status change
+    __mediaServerChange(roomUid, dispatch);
     const room = rooms.find(roomUid);
     // Dispatchin for stream published event
     room.on(
@@ -76,13 +77,23 @@ export function toggleMediaServer(roomUid) {
     return (dispatch, getState) => {
         dispatch({ type: ROOM_CHANGING_MEDIASERVER });
         const { useMediaServer } = getState().room;
-        console.log(DataSync.update(`_/rooms/${roomUid}/meta`, { useMediaServer: !useMediaServer }));
-
-        if (!useMediaServer) {
+        DataSync.update(`_/rooms/${roomUid}/meta`, { useMediaServer: !useMediaServer });
+        /*if (!useMediaServer) {
             return dispatch({ type: ROOM_STARTING_MEDIASERVER, useMediaServer: !useMediaServer });
         }
-        return dispatch({ type: ROOM_STOPING_MEDIASERVER, useMediaServer: !useMediaServer });
+        return dispatch({ type: ROOM_STOPING_MEDIASERVER, useMediaServer: !useMediaServer });*/
     };
+}
+
+function __mediaServerChange(roomUid, dispatch) {
+    DataSync.on(`_/rooms/${roomUid}/meta/useMediaServer`, 'value', snap => {
+       let useMediaServer = snap.val();
+       useMediaServer = useMediaServer !== null;
+       if (useMediaServer) {
+           return dispatch({ type: ROOM_STARTING_MEDIASERVER, useMediaServer: useMediaServer });
+       }
+        return dispatch({ type: ROOM_STOPING_MEDIASERVER, useMediaServer: useMediaServer });
+    });
 }
 
 /**
@@ -176,7 +187,7 @@ function __createRoom(name, dispatch) {
                     owner: room.owner,
                     extra: room.extra
                 });
-                streamListener(room.uid, dispatch);
+                roomListener(room.uid, dispatch);
                 return resolve(room);
             });
     });
@@ -201,7 +212,7 @@ function __joinRoom(room, dispatch) {
                     owner: room.owner,
                     extra: room.extra
                 });
-                streamListener(room.uid, dispatch);
+                roomListener(room.uid, dispatch);
                 return resolve(room);
             });
     });

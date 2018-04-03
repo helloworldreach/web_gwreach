@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import { GridListTile, GridListTileBar } from 'material-ui/GridList'
+import { GridListTile } from 'material-ui/GridList'
 
 
 const styles = theme => ({
@@ -17,7 +17,7 @@ const styles = theme => ({
 });
 
 const Stream = (props) => {
-    const { classes, uid, name } = props;
+    const { classes, uid } = props;
     return (
         <GridListTile key={uid} cols={2} rows={1}>
             <div id={`stream-${uid}`} className={classes.container}/>
@@ -27,7 +27,7 @@ const Stream = (props) => {
 
 Stream.proptypes = {
     uid: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    // name: PropTypes.string.isRequired,
     col: PropTypes.number
 };
 

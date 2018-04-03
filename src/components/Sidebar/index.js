@@ -34,83 +34,80 @@ const style = theme => ({
 
 const Sidebar = (props) => (
     <Drawer
-        type="persistent"
+        variant="persistent"
+        anchor="left"
+        open={props.drawerStatus}
         classes={{
             paper: props.classes.drawerPaper,
         }}
-        anchor='left'
-        open={props.drawerStatus}
     >
-        <div className={props.classes.drawerInner}>
-            <div className={props.classes.drawerHeader}>
-                <IconButton
-                    onClick={props.handleDrawerClose}
-                >
-                    {props.theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                </IconButton>
-            </div>
-            <Divider />
+        <div className={props.classes.drawerHeader}>
+            <IconButton onClick={props.handleDrawerClose}>
+                {props.theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+        </div>
+        <Divider />
+        <Divider />
+        <ListItem>
+            <ListItemIcon>
+                <CastIcon />
+            </ListItemIcon>
+            <ListItemText primary="Media server" />
+            <ListItemSecondaryAction>
+                <Switch
+                    checked={props.mediaServer}
+                    onChange={props.handleMediaServer}
+                />
+            </ListItemSecondaryAction>
+        </ListItem>
+        <Divider />
+        <List dense>
             <ListItem>
                 <ListItemIcon>
-                    <CastIcon />
+                    <ScreenShareIcon />
                 </ListItemIcon>
-                <ListItemText primary="Media server" />
+                <ListItemText primary="Share" />
                 <ListItemSecondaryAction>
                     <Switch
-                        checked={props.mediaServer}
-                        onChange={props.handleMediaServer}
+                        checked={!!props.local}
+                        disabled={!props.room}
+                        onChange={props.handleShare}
                     />
                 </ListItemSecondaryAction>
             </ListItem>
-            <Divider />
-            <List dense>
-                <ListItem>
-                    <ListItemIcon>
-                        <ScreenShareIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Share" />
-                    <ListItemSecondaryAction>
-                        <Switch
-                            checked={!!props.local}
-                            disabled={!props.room}
-                            onChange={props.handleShare}
-                        />
-                    </ListItemSecondaryAction>
-                </ListItem>
-                <ListItem
-                    button
-                    dense
-                    disabled={props.streams.length === 0}
-                >
-                    <ListItemIcon>
-                        <CallEndIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Hangup"/>
-                </ListItem>
-            </List>
-            <Divider />
-            <List dense>
-                {props.streams.map((item) => {
-                    return (
-                        <ListItem key={item.uid}>
-                            <Avatar>
-                                <PersonIcon/>
-                            </Avatar>
-                            <ListItemText primary={`${item.from.name} - subscribe`}/>
-                            <ListItemSecondaryAction>
-                                <Switch
-                                    checked={item.subscribed}
-                                    onChange={() => {
-                                        props.handleSubscribe(item.uid, item.subscribe);
-                                    }}
-                                    disabled={item.subscribed === 'subscribing'}
-                                />
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                    );
-                })}
-            </List>
-        </div>
+            <ListItem
+                button
+                dense
+                disabled={props.streams.length === 0}
+            >
+                <ListItemIcon>
+                    <CallEndIcon />
+                </ListItemIcon>
+                <ListItemText primary="Hangup"/>
+            </ListItem>
+        </List>
+        <Divider />
+        <List dense>
+            {props.streams.map((item) => {
+                return (
+                    <ListItem key={item.uid}>
+                        <Avatar>
+                            <PersonIcon/>
+                        </Avatar>
+                        <ListItemText primary={`${item.from.name} - subscribe`}/>
+                        <ListItemSecondaryAction>
+                            <Switch
+                                checked={item.subscribed}
+                                onChange={() => {
+                                    props.handleSubscribe(item.uid, item.subscribe);
+                                }}
+                                disabled={item.subscribed === 'subscribing'}
+                            />
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                );
+            })}
+        </List>
     </Drawer>
 );
 

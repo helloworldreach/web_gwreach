@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 
 import { withStyles } from 'material-ui/styles';
 
-import Reboot from 'material-ui/Reboot';
+import Reboot from 'material-ui/CssBaseline';
 
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
@@ -126,6 +126,40 @@ class App extends React.Component {
                         handleShare={this.handleShare}
                         handleSubscribe={this.handleSubscribe}
                     />
+                    <main
+                        className={classNames(classes.content, classes[`content-left`], {
+                            [classes.contentShift]: open,
+                            [classes[`contentShift-left`]]: open,
+                        })}
+                    >
+                        <div className={classes.drawerHeader} />
+                        {children}
+                    </main>
+                </div>
+            </div>
+        );
+    }
+}
+/*<div className={classes.root}>
+                <Reboot />
+                <div className={classes.appFrame}>
+                    <Header
+                        location={location}
+                        drawerStatus={open}
+                        openDrawer={this.handleDrawerOpen}
+                    />
+                    <Sidebar
+                        drawerStatus={open}
+                        mediaServer={mediaServer}
+                        room={roomUid}
+                        local={localUid}
+                        audio={muted}
+                        streams={Object.values(streams)}
+                        handleDrawerClose={this.handleDrawerClose}
+                        handleMediaServer={this.handleMediaServer}
+                        handleShare={this.handleShare}
+                        handleSubscribe={this.handleSubscribe}
+                    />
 
                     <main
                         className={classNames(classes.content, classes['content-left'], {
@@ -136,10 +170,7 @@ class App extends React.Component {
                         {children}
                     </main>
                 </div>
-            </div>
-        );
-    }
-}
+            </div>*/
 
 App.propTypes = {
     classes: PropTypes.object.isRequired,

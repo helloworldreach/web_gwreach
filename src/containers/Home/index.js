@@ -77,7 +77,7 @@ const Room = (props) => {
                 </CardContent>
                 <CardActions>
                     <Button
-                        raised
+                        variant="raised"
                         color="primary"
                         className={classes.join}
                         onClick={() => {

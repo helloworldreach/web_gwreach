@@ -8,6 +8,7 @@ const initialState = {};
 export default (state = initialState, action) => {
     switch (action.type) {
         case STREAM_PUBLISHED: {
+            console.log(action);
             return {
                 ...state,
                 [action.stream.uid]: {
@@ -41,9 +42,12 @@ export default (state = initialState, action) => {
             }
         }
         case STREAM_UNPUBLISHED: {
-            return {
-                ...state,
-            }
+            return Object.values(state)
+                .filter(stream => stream.uid !== action.stream.uid)
+                .reduce((obj, stream) => {
+                    obj[stream.uid] = state[stream.uid];
+                    return obj
+                }, {});
         }
         default: {
             return state;

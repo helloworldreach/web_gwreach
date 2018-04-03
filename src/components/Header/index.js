@@ -43,36 +43,35 @@ const styles = theme => ({
 });
 
 const Header = (props) => (
-    <header>
-        <AppBar
-            className={classNames(props.classes.appBar, {
-                [props.classes.appBarShift]: props.drawerStatus,
-                [props.classes['appBarShift-left']]: props.drawerStatus,
-            })}
-        >
-            <Toolbar disableGutters={!props.drawerStatus}>
-                <IconButton
-                    color="inherit"
-                    aria-label="props.drawerStatus drawer"
-                    onClick={props.openDrawer}
-                    className={classNames(props.classes.menuButton, {
-                        [props.classes.hide]: props.drawerStatus || props.location.pathname === '/'
-                    })}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography
-                    type="title"
-                    color="inherit"
-                    className={classNames({
-                        [props.classes.noButton]: props.drawerStatus || props.location.pathname === '/'
-                    })}
-                >
-                    Démonstrateur Janus/Reach gateway
-                </Typography>
-            </Toolbar>
-        </AppBar>
-    </header>
+    <AppBar
+        className={classNames(props.classes.appBar, {
+            [props.classes.appBarShift]: props.drawerStatus,
+            [props.classes[`appBarShift-left`]]: props.drawerStatus,
+        })}
+    >
+        <Toolbar disableGutters={!props.drawerStatus}>
+            <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={props.openDrawer}
+                className={classNames(props.classes.menuButton, {
+                    [props.classes.hide]: props.drawerStatus || props.location.pathname === '/'
+                })}
+            >
+                <MenuIcon />
+            </IconButton>
+            <Typography
+                variant="title"
+                color="inherit"
+                noWrap
+                className={classNames({
+                    [props.classes.noButton]: props.drawerStatus || props.location.pathname === '/'
+                })}
+            >
+                Démonstrateur Janus/Reach gateway
+            </Typography>
+        </Toolbar>
+    </AppBar>
 );
 
 Header.propTypes = {

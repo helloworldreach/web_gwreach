@@ -23,7 +23,7 @@ const Controls = (props) => {
     return (
         <CardActions className={props.classes.actions}>
             <Button
-                fab
+                variant="fab"
                 mini
                 color="secondary"
                 onClick={() => {
